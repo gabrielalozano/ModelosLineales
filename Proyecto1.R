@@ -20,7 +20,7 @@ ggplot(leukemia, aes(timedeath, whitecell))+
 #4.2 b <  log, because log is a function that tranforms the equation to be linear
 # The link function is the function of y that gives you Xb on the right hand side.
 
-# 4.2 c ?
+# 4.2 c (see pdf with latex)
 
 # 4.2 d
 # log on both sides E[log(Y)] = b1 + b_2 X
@@ -28,6 +28,9 @@ ggplot(leukemia, aes(timedeath, whitecell))+
 summary(lm(log(timedeath) ~ (whitecell), data=leukemia))
 
 # b1 = 11.0738 b2= -1.8829
+
+#usar glm para familia exponencial
+#exp_model <- glm(timedeath~whitecell, family=Gamma(link="log"), data=leukemia)
 
 
 # 4.2 e
@@ -46,13 +49,27 @@ abline(0, 0)                  # the horizon
 #Model fits the data well.
 
 
-#5.4 a ? 
+#5.4 a (not sure)
+
+exp_model <- glm(timedeath~whitecell, family=Gamma(link="log"), data=leukemia)
+
+summary(exp_model)
+
+beta_1 <- exp_model$coefficients[1]
+beta_2 <- exp_model$coefficients[2]
+
+#?????
+std_error_1 <- summary(exp_model)$coefficients[3]
+std_error_2 <- summary(exp_model)$coefficients[4]
+
+#CI for beta_1???
+c(beta_1 - 1.96*std_error_1, beta_1 + 1.96*std_error_1)
+c(beta_2 - 1.96*std_error_2, beta_2 + 1.96*std_error_2)
+
+
+"
 firstmodel = lm(log(timedeath) ~ (whitecell), data=leukemia)
-
 confint(firstmodel, level=0.90)
-
-
-
 WaldTest = function(L,thetahat,Vn,h=0) # H0: L theta = h
   # Note Vn is the asymptotic covariance matrix, so it's the
   # Consistent estimator divided by n. For true Wald tests
@@ -68,9 +85,13 @@ WaldTest = function(L,thetahat,Vn,h=0) # H0: L theta = h
   WaldTest[1] = W; WaldTest[2] = r; WaldTest[3] = pval
   WaldTest
 } # End function WaldTest
-WaldTest()          
+WaldTest()
+"
 
+#5.4 b
 
+dev_diff <- exp_model$nul_deviance - exp_model$deviance
+dev_diff
 
 
         
