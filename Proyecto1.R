@@ -62,8 +62,8 @@ beta_2 <- exp_model$coefficients[2]
 betaVar <- c(vcov(exp_model)[1,1], vcov(exp_model)[2,2])
 
 #using N(0,1) to derive confidence interval of 95%
-CI_1 <- c(beta_1 - 1.96*std_error_1, beta_1 + 1.96*std_error_1)
-CI_2 <- c(beta_2 - 1.96*std_error_2, beta_2 + 1.96*std_error_2)
+CI_1 <- c(beta_1 - 1.96*sqrt(betaVar[1]), beta_1 + 1.96*sqrt(betaVar[1]))
+CI_2 <- c(beta_2 - 1.96*sqrt(betaVar[2]), beta_2 + 1.96*sqrt(betaVar[2]))
 
 CI_1
 CI_2
