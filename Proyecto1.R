@@ -61,9 +61,9 @@ beta_2 <- exp_model$coefficients[2]
 #extracting parameter variances from variance-covariance matrix
 betaVar <- c(vcov(exp_model)[1,1], vcov(exp_model)[2,2])
 
-#using chi-squared distribution (df=1) for confidence intervals
-CI_1 <- c(beta_1 + sqrt(qchisq(0.025,1)*betaVar[1]), beta_1 + sqrt(qchisq(0.975,1)*betaVar[1]))
-CI_2 <- c(beta_2 + sqrt(qchisq(0.025,1)*betaVar[2]), beta_2 + sqrt(qchisq(0.975,1)*betaVar[2]))
+#using N(0,1) to derive confidence interval of 95%
+CI_1 <- c(beta_1 - 1.96*std_error_1, beta_1 + 1.96*std_error_1)
+CI_2 <- c(beta_2 - 1.96*std_error_2, beta_2 + 1.96*std_error_2)
 
 CI_1
 CI_2
